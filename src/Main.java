@@ -13,10 +13,18 @@ public class Main {
                 TaskStatus.NEW,
                 epic.getId()
         );
+
+        Task task1 = new Task(taskManager.generateId(), "Покушать", "Приготовить завтрак", TaskStatus.NEW);
+
+        Task task2 = new Task(taskManager.generateId(), "Погулять", "Пойти погулять на улице", TaskStatus.NEW);
+
         taskManager.addTask(packBoxes);
 
         epic.addSubtaskId(packBoxes.getId());
-
+        taskManager.addTask(task1);
+        System.out.println(taskManager.getTaskById(3));
+        taskManager.updateTask(task2, task1.getId());
+        System.out.println(taskManager.getTaskById(4));
         System.out.println(epic);
         System.out.println(packBoxes);
         System.out.println(taskManager.getTaskById(epic.getId()));

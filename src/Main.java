@@ -32,13 +32,13 @@ public class Main {
         System.out.println(epic);
 
         packBoxes.setStatus(TaskStatus.DONE);
-        manager.updateSubTask(packBoxes);
+        manager.updateSubtask(packBoxes);
 
         System.out.println("\n=== После обновления одной подзадачи на DONE ===");
         System.out.println(manager.getTaskById(epic.getId()));
 
         sayGoodBye.setStatus(TaskStatus.DONE);
-        manager.updateSubTask(sayGoodBye);
+        manager.updateSubtask(sayGoodBye);
 
         System.out.println("\n=== После обновлнеия второй подзадачи на DONE ===");
         System.out.println(manager.getTaskById(epic.getId()));

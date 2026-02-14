@@ -53,7 +53,7 @@ public class TaskManager {
     }
 
 
-    public void updateSubTask(Subtask updatedSubtask){
+    public void updateSubtask(Subtask updatedSubtask){
         tasks.put(updatedSubtask.getId(), updatedSubtask);
 
         int epicId = updatedSubtask.getEpicId();

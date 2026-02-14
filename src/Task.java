@@ -27,6 +27,10 @@ public class Task {
         return status;
     }
 
+    protected void setStatus(TaskStatus newStatus){
+        status = newStatus;
+    }
+
     @Override
     public String toString(){
         return String.format("Task:{id=%d, name='%s', status=%s, description='%s'}", id, name, status, description);

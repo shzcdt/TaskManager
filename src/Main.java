@@ -2,64 +2,26 @@ public class Main {
     public static void main(String[] args) {
         TaskManager manager = new TaskManager();
 
-        Epic epic = new Epic(manager.generateId(), "Переезд", "Организовать переезд",
-                TaskStatus.NEW);
-        manager.addTask(epic);
+        Task simple = new Task(0, "Купить молоко", "В магазине за углом", TaskStatus.NEW);
+        manager.createTask(simple);
 
-        Subtask packBoxes = new Subtask(
-                manager.generateId(),
-                "Собрать коробки",
-                "Упоковать вещи",
-                TaskStatus.NEW,
-                epic.getId()
-        );
+        Epic move = new Epic(0, "Переезд", "Организовать переезд", TaskStatus.NEW);
+        manager.createEpic(move);
 
-        manager.addTask(packBoxes);
-        epic.addSubtaskId(packBoxes.getId());
+        Subtask pack = new Subtask(0, "Собрать коробки", "...", TaskStatus.NEW, move.getId());
+        manager.createSubtask(pack);
 
-        Subtask sayGoodBye = new Subtask(
-                manager.generateId(),
-                "Попрощаться",
-                "Сказать соседям пока",
-                TaskStatus.NEW,
-                epic.getId()
-        );
-        manager.addTask(sayGoodBye);
-        epic.addSubtaskId(sayGoodBye.getId());
+        System.out.println("Tasks: " + manager.getTasks());
+        System.out.println("Subtasks: " + manager.getSubtask());
+        System.out.println("Epics: " + manager.getEpics());
+        // Обновим подзадачу
+        pack.setStatus(TaskStatus.IN_PROGRESS);
+        manager.updateSubtask(pack);
+        System.out.println("ТЫ лох ебанный коддинга, если тут не process");
+        System.out.println("Epic after update: " + manager.getEpicById(move.getId()));
 
-        System.out.println("=== Проверка обновление Epic ===");
-        System.out.println("===После создания===");
-        System.out.println(epic);
-
-        packBoxes.setStatus(TaskStatus.DONE);
-        manager.updateSubtask(packBoxes);
-
-        System.out.println("\n=== После обновления одной подзадачи на DONE ===");
-        System.out.println(manager.getTaskById(epic.getId()));
-
-        sayGoodBye.setStatus(TaskStatus.DONE);
-        manager.updateSubtask(sayGoodBye);
-
-        System.out.println("\n=== После обновлнеия второй подзадачи на DONE ===");
-        System.out.println(manager.getTaskById(epic.getId()));
-
-        System.out.println("\n=== Проверка обновления задачи ===");
-
-        Task task1 = new Task(manager.generateId(), "Покушать", "Приготовить завтрак", TaskStatus.NEW);
-
-        Task task2 = new Task(manager.generateId(), "Погулять", "Пойти погулять на улице", TaskStatus.NEW);
-        manager.addTask(task1);
-        System.out.println(manager.getTaskById(task1.getId()));
-        manager.updateTask(task2, task1.getId());
-        System.out.println(manager.getTaskById(task2.getId()));
-
-        System.out.println("\n=== Прочие проверки === ");
-
-        System.out.println(epic);
-        System.out.println(packBoxes);
-        System.out.println(manager.getTaskById(epic.getId()));
-        System.out.println(manager.getTasks());
-        manager.removeAllTasks();
-        System.out.println(manager.getTasks());
+        // Удаляем подзадачу
+        manager.deleteSubtaskById(pack.getId());
+        System.out.println("Epic after delete: " + manager.getEpicById(move.getId()));
     }
 }

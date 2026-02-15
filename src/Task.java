@@ -27,8 +27,20 @@ public class Task {
         return status;
     }
 
+    protected void setId(int newId){
+        id = newId;
+    }
+
     protected void setStatus(TaskStatus newStatus){
         status = newStatus;
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    protected void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

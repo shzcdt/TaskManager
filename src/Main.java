@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        InMemoryTaskManager manager = new InMemoryTaskManager();
 
         Task simple = new Task(0, "Купить молоко", "В магазине за углом", TaskStatus.NEW);
         manager.createTask(simple);
@@ -23,5 +23,7 @@ public class Main {
         // Удаляем подзадачу
         manager.deleteSubtaskById(pack.getId());
         System.out.println("Epic after delete: " + manager.getEpicById(move.getId()));
+        System.out.println(manager.getTaskById(11000));
+        System.out.println(manager.history());
     }
 }

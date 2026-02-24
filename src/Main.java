@@ -1,6 +1,9 @@
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        InMemoryTaskManager manager = new InMemoryTaskManager();
+        /*TaskManager manager = Managers.getDefault();
+        HistoryManager historyManager = Managers.getDefaultHistory();
 
         Task simple = new Task(0, "Купить молоко", "В магазине за углом", TaskStatus.NEW);
         manager.createTask(simple);
@@ -23,7 +26,25 @@ public class Main {
         // Удаляем подзадачу
         manager.deleteSubtaskById(pack.getId());
         System.out.println("Epic after delete: " + manager.getEpicById(move.getId()));
-        System.out.println(manager.getTaskById(11000));
-        System.out.println(manager.history());
+        System.out.println(manager.getTaskById(11000));*/
+
+        System.out.println("Тест 2 тех-улучшения");
+        TaskManager mng = Managers.getDefault();
+
+        mng.createTask(new Task(0, "T1", "", TaskStatus.NEW));
+        mng.createEpic(new Epic(0, "E1", "", TaskStatus.NEW));
+        mng.createSubtask(new Subtask(0, "S1", "", TaskStatus.NEW, 2));
+
+        mng.getTaskById(1);
+        mng.getSubtasksById(3);
+        mng.getEpicById(2);
+
+        System.out.println(mng.history());
+
+        for (int i = 0; i < 8; i++){
+            mng.getTaskById(1);
+        }
+        System.out.println(mng.history().size());
+        System.out.println(mng.history());
     }
 }

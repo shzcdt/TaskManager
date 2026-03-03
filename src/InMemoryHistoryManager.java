@@ -9,27 +9,48 @@ public class InMemoryHistoryManager implements HistoryManager{
     private Node tail;
     private int maxSize = 10;
 
-    private final List<Task> history = new ArrayList<>();
 
     @Override
     public void add(Task task) {
-        if (task != null){
-            history.add(task);
+        int id = task.getId();
 
-            if(history.size() > 10){
-                history.remove(0);
+        if (nodeMap.containsKey(id)) {
+            Node oldNode = nodeMap.get(id);
+            removeNode(oldNode);
+        }
+
+        Node newNode = new Node(task);
+        linkLast(newNode);
+        nodeMap.put(id, newNode);
+
+        if (nodeMap.size() > maxSize) {
+            if (head != null) {
+                nodeMap.remove(head.task.getId());
+                removeNode(head);
             }
         }
     }
 
     @Override
     public void remove(int id) {
+        if (nodeMap.containsKey(id)) {
+            Node node = nodeMap.get(id);
+            removeNode(node);
 
+            nodeMap.remove(id);
+        }
     }
 
     @Override
     public List<Task> getHistory() {
-        return new ArrayList<>(history);
+        List<Task> history = new ArrayList<>();
+        Node current = head;
+        while (current != null) {
+            history.add(current.task);
+
+            current = current.next;
+        }
+        return history;
     }
 
     private void linkLast(Node node){

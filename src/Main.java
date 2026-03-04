@@ -1,8 +1,7 @@
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         TaskManager manager = Managers.getDefault();
+        HistoryManager historyManager = Managers.getDefaultHistory();
 
         System.out.println("Тест 2 тех-улучшения");
 
@@ -22,5 +21,6 @@ public class Main {
         }
         System.out.println("\n#История");
         System.out.println(manager.history());
+        System.out.println(historyManager.getHistory());
     }
 }

@@ -7,8 +7,7 @@ public class InMemoryHistoryManager implements HistoryManager{
     private final Map<Integer, Node> nodeMap = new HashMap<>();
     private Node head;
     private Node tail;
-    private int maxSize = 10;
-
+    private final int maxSize = 10;
 
     @Override
     public void add(Task task) {
@@ -44,6 +43,7 @@ public class InMemoryHistoryManager implements HistoryManager{
     @Override
     public List<Task> getHistory() {
         List<Task> history = new ArrayList<>();
+
         Node current = head;
         while (current != null) {
             history.add(current.task);

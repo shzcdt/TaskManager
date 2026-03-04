@@ -1,9 +1,11 @@
 public class Managers {
+    static HistoryManager sharedHistory = new InMemoryHistoryManager();
+
     public static TaskManager getDefault() {
-        return new InMemoryTaskManager();
+        return new InMemoryTaskManager(sharedHistory);
     }
 
     public static HistoryManager getDefaultHistory() {
-        return new InMemoryHistoryManager();
+        return sharedHistory;
     }
 }

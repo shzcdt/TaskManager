@@ -12,8 +12,8 @@ public class InMemoryTaskManager implements TaskManager {
 
     private int nextId = 1;
 
-    public InMemoryTaskManager() {
-        this.historyManager = new InMemoryHistoryManager();
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        this.historyManager = historyManager;
     }
 
     @Override

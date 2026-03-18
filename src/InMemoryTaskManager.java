@@ -28,7 +28,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Subtask> getSubtask() {
+    public List<Subtask> getSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 

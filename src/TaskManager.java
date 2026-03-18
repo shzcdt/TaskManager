@@ -9,7 +9,7 @@ public interface TaskManager {
     void createTask(Task task);
     void updateTask(Task updatedTask);
 
-    List<Subtask> getSubtask();
+    List<Subtask> getSubtasks();
     Subtask getSubtasksById(int subtaskId);
     void deleteAllSubtasks();
     void deleteSubtaskById(int subtasksId);

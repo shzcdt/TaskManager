@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -10,9 +9,17 @@ import java.util.List;
 public class FileBackedTasksManager extends InMemoryTaskManager{
     private final Path file;
 
-    public FileBackedTasksManager(HistoryManager historyManager, String filePath) {
+    public FileBackedTasksManager(HistoryManager historyManager, Path filePath) {
         super(historyManager);
-        this.file = Paths.get(filePath);
+        this.file = filePath;
+
+        try {
+            Files.createDirectories(file.getParent());
+        }catch (IOException exception){
+            throw new ManagerException("Не удалось создать директорию для файла: "
+                    + filePath.getFileName(), exception);
+        }
+
         load();
     }
 
@@ -47,10 +54,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     }
 
     private void save() {
-        if (!Files.exists(file)) {
-            System.out.println("Файл не найден");
-            return;
-        }
         try {
             List<String> linesForWriter = new ArrayList<>();
             String heading = "id,type,name,status,description,epicId";
@@ -80,9 +83,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     }
 
     public static void main(String[] args) {
-        String filePath = Paths.get("").toAbsolutePath().resolve("data/tasks.csv").toString();
+        Path filePath = Paths.get("src/data", "tasks.csv");
 
-        System.out.println(filePath);
         FileBackedTasksManager manager = new FileBackedTasksManager(
                 Managers.getDefaultHistory(),
                 filePath

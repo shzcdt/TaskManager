@@ -17,7 +17,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
             Files.createDirectories(file.getParent());
         }catch (IOException exception){
             throw new ManagerException("Не удалось создать директорию для файла: "
-                    + filePath.getFileName(), exception);
+                    + file.getFileName(), exception);
         }
 
         load();
@@ -152,34 +152,5 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     public void updateEpic(Epic updatedEpic){
         super.updateEpic(updatedEpic);
         save();
-    }
-
-
-    public static void main(String[] args) {
-        Path filePath = Paths.get("src/data", "tasks.csv");
-
-        FileBackedTasksManager manager = new FileBackedTasksManager(
-                Managers.getDefaultHistory(),
-                filePath
-        );
-
-        System.out.println("---Создаем задачи---");
-        Task task = new Task(0, "Купить молоко", "В магазине", TaskStatus.NEW);
-        manager.createTask(task);
-
-        Epic epic = new Epic(0, "Переезд", "Организовать переезд", TaskStatus.NEW);
-        manager.createEpic(epic);
-
-        Subtask subtask = new Subtask(0, "Собрать коробки", "Упаковать вещи", TaskStatus.IN_PROGRESS, epic.getId());
-        manager.createSubtask(subtask);
-        manager.save();
-
-        System.out.println("Задачи после создания:");
-        manager.getTasks().forEach(System.out::println);
-        manager.getEpics().forEach(System.out::println);
-        manager.getSubtasks().forEach(System.out::println);
-
-        System.out.println("\nФайл 'data/tasks.csv' должен быть создан.");
-        System.out.println("Запусти программу ещё раз, чтобы проверить загрузку!");
     }
 }

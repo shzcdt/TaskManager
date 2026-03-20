@@ -82,6 +82,79 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
         }
     }
 
+    @Override
+    public void createTask(Task task){
+        super.createTask(task);
+        save();
+    }
+
+    @Override
+    public void updateTask(Task updatedTask){
+        super.updateTask(updatedTask);
+        save();
+    }
+
+    @Override
+    public void deleteTaskById(int taskId){
+        super.deleteTaskById(taskId);
+        save();
+    }
+
+    @Override
+    public void deleteAllTasks(){
+        super.deleteAllTasks();
+        save();
+    }
+
+    @Override
+    public void createSubtask(Subtask subtask){
+        super.createSubtask(subtask);
+        save();
+    }
+
+    @Override
+    public void deleteAllSubtasks(){
+        super.deleteAllSubtasks();
+        save();
+    }
+
+    @Override
+    public void deleteSubtaskById(int subtasksId){
+        super.deleteSubtaskById(subtasksId);
+        save();
+    }
+
+    @Override
+    public void updateSubtask(Subtask updatedSubtask){
+        super.updateSubtask(updatedSubtask);
+        save();
+    }
+
+    @Override
+    public void createEpic(Epic epic){
+        super.createEpic(epic);
+        save();
+    }
+
+    @Override
+    public void deleteAllEpic(){
+        super.deleteAllEpic();
+        save();
+    }
+
+    @Override
+    public void deleteEpicById(int epicId){
+        super.deleteEpicById(epicId);
+        save();
+    }
+
+    @Override
+    public void updateEpic(Epic updatedEpic){
+        super.updateEpic(updatedEpic);
+        save();
+    }
+
+
     public static void main(String[] args) {
         Path filePath = Paths.get("src/data", "tasks.csv");
 

@@ -20,5 +20,7 @@ public class Main {
         }
         System.out.println("\n#История");
         System.out.println(manager.history());
+
+        System.out.println("Завершение 5 тех. задания");
     }
 }

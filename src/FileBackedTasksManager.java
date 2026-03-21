@@ -2,8 +2,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class FileBackedTasksManager extends InMemoryTaskManager{
@@ -41,11 +41,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
                 Task task = Task.fromString(line);
 
                 if (task instanceof Epic) {
-                    createEpic((Epic) task);
+                    super.createEpic((Epic) task);
                 } else if (task instanceof Subtask) {
-                    createSubtask((Subtask) task);
+                    super.createSubtask((Subtask) task);
                 } else {
-                    createTask(task);
+                    super.createTask(task);
                 }
             }
         } catch (IOException exception) {
@@ -60,20 +60,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
 
             linesForWriter.add(heading);
 
-            List<Task> tasks = getTasks();
-            List<Subtask> subtasks = getSubtasks();
-            List<Epic> epics = getEpics();
+            List<Task> allTasks = new ArrayList<>();
+            allTasks.addAll(getTasks());
+            allTasks.addAll(getSubtasks());
+            allTasks.addAll(getEpics());
 
-            for (Epic epic : epics) {
-                linesForWriter.add(Task.toString(epic));
-            }
+            allTasks.sort(Comparator.comparing(Task::getId));
 
-            for (Task task : tasks) {
+            for (Task task : allTasks){
                 linesForWriter.add(Task.toString(task));
-            }
-
-            for (Subtask subtask : subtasks) {
-                linesForWriter.add(Task.toString(subtask));
             }
 
             Files.write(file, linesForWriter, StandardCharsets.UTF_8);

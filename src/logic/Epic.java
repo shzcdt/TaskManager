@@ -1,10 +1,12 @@
+package logic;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Epic extends Task{
     private List<Integer> subTaskIds;
 
-    public Epic(int id, String name, String description, TaskStatus status) {
+    public Epic(int id, String name, String description, TaskStatus status){
         super(id, name, description, status);
         subTaskIds = new ArrayList<>();
     }
@@ -23,7 +25,7 @@ public class Epic extends Task{
 
     @Override
     public String toString(){
-        return String.format("Epic:{id=%d, name='%s', subtasks:%s, status=%s, description='%s'}", getId(),
+        return String.format("logic.Epic:{id=%d, name='%s', subtasks:%s, status=%s, description='%s'}", getId(),
                 getName(), subTaskIds, getStatus(), getDescription());
     }
 }

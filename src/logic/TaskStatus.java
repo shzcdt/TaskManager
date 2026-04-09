@@ -1,3 +1,5 @@
+package logic;
+
 public enum TaskStatus {
     NEW,
     IN_PROGRESS,

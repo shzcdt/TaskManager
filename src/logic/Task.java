@@ -1,3 +1,5 @@
+package logic;
+
 public class Task {
     private int id;
     private String name;
@@ -84,6 +86,6 @@ public class Task {
 
     @Override
     public String toString(){
-        return String.format("Task:{id=%d, name='%s', status=%s, description='%s'}", id, name, status, description);
+        return String.format("logic.Task:{id=%d, name='%s', status=%s, description='%s'}", id, name, status, description);
     }
 }

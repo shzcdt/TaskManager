@@ -14,7 +14,7 @@ public class Subtask extends Task{
 
     @Override
     public String toString(){
-        return String.format("logic.Subtask:{id=%d, epicId=%d, name='%s', status=%s, description='%s'}", getId(), epicId,
+        return String.format("Subtask:{id=%d, epicId=%d, name='%s', status=%s, description='%s'}", getId(), epicId,
                 getName(), getStatus(), getDescription());
     }
 }

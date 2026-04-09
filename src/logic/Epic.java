@@ -25,7 +25,7 @@ public class Epic extends Task{
 
     @Override
     public String toString(){
-        return String.format("logic.Epic:{id=%d, name='%s', subtasks:%s, status=%s, description='%s'}", getId(),
+        return String.format("Epic:{id=%d, name='%s', subtasks:%s, status=%s, description='%s'}", getId(),
                 getName(), subTaskIds, getStatus(), getDescription());
     }
 }

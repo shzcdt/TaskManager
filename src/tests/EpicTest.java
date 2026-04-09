@@ -15,7 +15,6 @@ class EpicTest {
         manager = Managers.getDefault();
     }
 
-    // Проверить расчёт статуса эпика, когда у него пустой список подзадач.
     @Test
     public void epicStatusMustBeNewWhenNoSubtasks() {
         Epic epic = new Epic(0, "Epic1", "", TaskStatus.NEW);
@@ -28,7 +27,6 @@ class EpicTest {
         assertEquals(expectedStatus, actualStatus);
     }
 
-    // Должен быть в процессе при не готовом сабтаске и готовым при всех готовых сабтасках
     @Test
     public void epicStatusMustBeInProgressWhenSubtasksInProcess() {
         Epic epic = new Epic(0, "Epic1", "", TaskStatus.NEW);

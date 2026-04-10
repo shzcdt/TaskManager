@@ -24,8 +24,8 @@ abstract class TasksManagerTest<T extends TaskManager> {
     @Test
     public void getTasksTest() {
         Task task1 = new Task(1, "Task1", "", TaskStatus.NEW);
-        Task task2 = new Task(1, "Task2", "", TaskStatus.NEW);
-        Task task3 = new Task(1, "Task3", "", TaskStatus.NEW);
+        Task task2 = new Task(2, "Task2", "", TaskStatus.NEW);
+        Task task3 = new Task(3, "Task3", "", TaskStatus.NEW);
         manager.createTask(task1);
         manager.createTask(task2);
         manager.createTask(task3);
@@ -109,8 +109,8 @@ abstract class TasksManagerTest<T extends TaskManager> {
 
     @Test
     public void getSubtasksTest() {
-        Subtask subtask1 = new Subtask(2, "subtask1", "", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask(3, "subtask2", "", TaskStatus.NEW, 1);
+        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
+        Subtask subtask2 = new Subtask(2, "subtask2", "", TaskStatus.NEW, 1);
 
         manager.createSubtask(subtask1);
         manager.createSubtask(subtask2);
@@ -124,8 +124,8 @@ abstract class TasksManagerTest<T extends TaskManager> {
 
     @Test
     public void getSubtaskByIdTest() {
-        Subtask subtask1 = new Subtask(2, "subtask1", "", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask(3, "subtask2", "", TaskStatus.NEW, 1);
+        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
+        Subtask subtask2 = new Subtask(2, "subtask2", "", TaskStatus.NEW, 1);
 
         manager.createSubtask(subtask1);
         manager.createSubtask(subtask2);
@@ -135,8 +135,8 @@ abstract class TasksManagerTest<T extends TaskManager> {
 
     @Test
     public void deleteAllSubtasksTest() {
-        Subtask subtask1 = new Subtask(2, "subtask1", "", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask(3, "subtask2", "", TaskStatus.NEW, 1);
+        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
+        Subtask subtask2 = new Subtask(2, "subtask2", "", TaskStatus.NEW, 1);
 
         manager.createSubtask(subtask1);
         manager.createSubtask(subtask2);
@@ -177,6 +177,101 @@ abstract class TasksManagerTest<T extends TaskManager> {
         manager.updateSubtask(update);
 
         assertEquals(update, manager.getSubtasksById(1));
+    }
+
+    @Test
+    public void getEpicsTest(){
+        Epic epic1 = new Epic(1, "Epic1", "", TaskStatus.NEW);
+        Epic epic2 = new Epic(2, "Epic2", "", TaskStatus.NEW);
+
+        manager.createEpic(epic1);
+        manager.createEpic(epic2);
+
+        List<Epic> expectedEpics = new ArrayList<>();
+        expectedEpics.add(epic1);
+        expectedEpics.add(epic2);
+
+        assertEquals(expectedEpics, manager.getEpics());
+    }
+
+    @Test
+    public void getEpicByIdTest() {
+        Epic epic1 = new Epic(1, "epic1", "", TaskStatus.NEW);
+        Epic epic2 = new Epic(2, "Epic2", "", TaskStatus.NEW);
+
+        manager.createEpic(epic1);
+        manager.createEpic(epic2);
+
+        Epic expectedEpic = epic2;
+
+
+        assertEquals(expectedEpic, manager.getEpicById(2));
+    }
+
+    @Test
+    public void deleteAllEpicTest(){
+        Epic epic1 = new Epic(1, "Epic1", "", TaskStatus.NEW);
+        Epic epic2 = new Epic(2, "Epic2", "", TaskStatus.NEW);
+
+        manager.createEpic(epic1);
+        manager.createEpic(epic2);
+
+        manager.deleteAllEpic();
+
+        assertTrue(manager.getEpics().isEmpty());
+    }
+
+    @Test
+    public void deleteEpicByIdTest(){
+        Epic epic1 = new Epic(1, "epic1", "", TaskStatus.NEW);
+        Epic epic2 = new Epic(2, "Epic2", "", TaskStatus.NEW);
+
+        manager.createEpic(epic1);
+        manager.createEpic(epic2);
+
+        manager.deleteEpicById(1);
+
+        List<Epic> expectedEpics = new ArrayList<>();
+        expectedEpics.add(epic2);
+
+        assertEquals(expectedEpics, manager.getEpics());
+    }
+
+    @Test
+    public void createEpicTest(){
+        Epic epic1 = new Epic(1, "Epic1", "", TaskStatus.NEW);
+
+        manager.createEpic(epic1);
+
+        assertEquals(epic1, manager.getEpicById(1));
+    }
+
+    @Test
+    public void updateEpicTest(){
+        Epic epic1 = new Epic(1, "Epic1", "", TaskStatus.NEW);
+        manager.createEpic(epic1);
+
+        Epic update = new Epic(1, "Update", "", TaskStatus.IN_PROGRESS);
+        manager.updateEpic(update);
+
+        assertEquals(update, manager.getEpicById(1));
+    }
+
+    @Test
+    public void getSubtasksByEpicIdTest(){
+        Epic epic1 = new Epic(1, "epic1", "", TaskStatus.NEW);
+        Subtask subtask1 = new Subtask(2, "subtask1", "", TaskStatus.NEW, 1);
+        Subtask subtask2 = new Subtask(3, "subtask2", "", TaskStatus.NEW, 1);
+
+        manager.createEpic(epic1);
+        manager.createSubtask(subtask1);
+        manager.createSubtask(subtask2);
+
+        List<Subtask> expectedSubtasks = new ArrayList<>();
+        expectedSubtasks.add(subtask1);
+        expectedSubtasks.add(subtask2);
+
+        assertEquals(expectedSubtasks, manager.getSubtasksByEpicId(1));
     }
 
     @Test

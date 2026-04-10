@@ -1,7 +1,8 @@
 package tests;
 
-import logic.*;
-import org.junit.jupiter.api.BeforeEach;
+import logic.HistoryManager;
+import logic.InMemoryTaskManager;
+import logic.TaskManager;
 
 public class InMemoryTaskManagerTest extends TasksManagerTest{
     @Override

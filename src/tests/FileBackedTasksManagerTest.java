@@ -2,7 +2,6 @@ package tests;
 
 import logic.FileBackedTasksManager;
 import logic.HistoryManager;
-import logic.Managers;
 import logic.TaskManager;
 
 import java.nio.file.Paths;

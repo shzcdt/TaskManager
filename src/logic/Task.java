@@ -88,4 +88,15 @@ public class Task {
     public String toString(){
         return String.format("Task:{id=%d, name='%s', status=%s, description='%s'}", id, name, status, description);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        return (o instanceof Task) && this.id == ((Task) o).id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
 }

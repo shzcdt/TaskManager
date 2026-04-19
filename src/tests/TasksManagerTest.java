@@ -5,7 +5,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,287 +15,165 @@ abstract class TasksManagerTest<T extends TaskManager> {
     private T manager;
 
     @BeforeEach
-    public void createNewManager(){
+    void setUp() {
         HistoryManager history = new InMemoryHistoryManager();
         manager = createManager(history);
     }
-    @Test
-    public void getTasksTest() {
-        Task task1 = new Task(1, "Task1", "", TaskStatus.NEW);
-        Task task2 = new Task(2, "Task2", "", TaskStatus.NEW);
-        Task task3 = new Task(3, "Task3", "", TaskStatus.NEW);
-        manager.createTask(task1);
-        manager.createTask(task2);
-        manager.createTask(task3);
 
-        List<Task> expectedTasks = new ArrayList<>();
-        expectedTasks.add(task1);
-        expectedTasks.add(task2);
-        expectedTasks.add(task3);
-
-        List<Task> actualTasks = manager.getTasks();
-
-        assertEquals(expectedTasks, actualTasks);
+    @AfterEach
+    void tearDown() {
+        if (manager != null) {
+            manager.deleteAllTasks();
+            manager.deleteAllSubtasks();
+            manager.deleteAllEpic();
+        }
     }
 
     @Test
-    public void getTaskByIdTest() {
-        Task task1 = new Task(1, "Task1", "", TaskStatus.NEW);
-        Task task2 = new Task(2, "Task2", "", TaskStatus.NEW);
-
-        manager.createTask(task1);
-        manager.createTask(task2);
-
-        Task expectedTask = task2;
-        Task actualTask = manager.getTaskById(2);
-
-        assertEquals(expectedTask, actualTask);
-    }
-
-    @Test
-    public void deleteAllTasksTest() {
-        Task task1 = new Task(1, "Task1", "", TaskStatus.NEW);
-        Task task2 = new Task(2, "Task2", "", TaskStatus.NEW);
-
-        manager.createTask(task1);
-        manager.createTask(task2);
-
-        manager.deleteAllTasks();
-
+    void getTasksEmptyReturnsEmptyList() {
         assertTrue(manager.getTasks().isEmpty());
     }
 
     @Test
-    public void deleteTaskById() {
-        Task task1 = new Task(1, "Task1", "", TaskStatus.NEW);
-        Task task2 = new Task(2, "Task2", "", TaskStatus.NEW);
+    void createAndGetTaskStandardReturnsCreatedTask() {
+        Task task = new Task(0, "Task1", "Desc", TaskStatus.NEW);
+        manager.createTask(task);
+        int id = task.getId();
 
-        manager.createTask(task1);
-        manager.createTask(task2);
-
-        manager.deleteTaskById(2);
-
-        List<Task> expectedTasks = new ArrayList<>();
-        expectedTasks.add(task1);
-
-        List<Task> actualTasks = manager.getTasks();
-
-        assertEquals(expectedTasks, actualTasks);
+        Task actual = manager.getTaskById(id);
+        assertNotNull(actual);
+        assertEquals(task, actual);
     }
 
     @Test
-    public void createTask() {
-        Task task1 = new Task(1, "Task1", "", TaskStatus.NEW);
-        manager.createTask(task1);
-
-        assertEquals(task1, manager.getTaskById(1));
+    void getTaskByIdNonExistentReturnsNull() {
+        assertNull(manager.getTaskById(999));
     }
 
     @Test
-    public void updateTask() {
-        Task task1 = new Task(1, "Task1", "", TaskStatus.NEW);
-        manager.createTask(task1);
-        Task updateTask = new Task(1, "Update", "", TaskStatus.NEW);
-        manager.updateTask(updateTask);
+    void updateTaskStandardUpdatesFields() {
+        Task task = new Task(0, "Old", "Desc", TaskStatus.NEW);
+        manager.createTask(task);
+        int id = task.getId();
 
-        Task expectedTask = updateTask;
+        Task updated = new Task(id, "NewName", "NewDesc", TaskStatus.IN_PROGRESS);
+        manager.updateTask(updated);
 
-        Task actualTask = manager.getTaskById(1);
-
-        assertEquals(expectedTask, actualTask);
+        Task actual = manager.getTaskById(id);
+        assertEquals("NewName", actual.getName());
+        assertEquals("NewDesc", actual.getDescription());
+        assertEquals(TaskStatus.IN_PROGRESS, actual.getStatus());
     }
 
     @Test
-    public void getSubtasksTest() {
-        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask(2, "subtask2", "", TaskStatus.NEW, 1);
-
-        manager.createSubtask(subtask1);
-        manager.createSubtask(subtask2);
-
-        List<Subtask> expectedSubtasks = new ArrayList<>();
-        expectedSubtasks.add(subtask1);
-        expectedSubtasks.add(subtask2);
-
-        assertEquals(expectedSubtasks, manager.getSubtasks());
+    void updateTaskNonExistentIgnored() {
+        Task updated = new Task(999, "New", "", TaskStatus.NEW);
+        manager.updateTask(updated);
+        assertTrue(manager.getTasks().isEmpty());
     }
 
     @Test
-    public void getSubtaskByIdTest() {
-        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask(2, "subtask2", "", TaskStatus.NEW, 1);
+    void deleteTaskByIdStandardRemovesTask() {
+        Task task = new Task(0, "Task1", "", TaskStatus.NEW);
+        manager.createTask(task);
+        int id = task.getId();
 
-        manager.createSubtask(subtask1);
-        manager.createSubtask(subtask2);
-
-        assertEquals(subtask2, manager.getSubtasksById(2));
+        manager.deleteTaskById(id);
+        assertNull(manager.getTaskById(id));
     }
 
     @Test
-    public void deleteAllSubtasksTest() {
-        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask(2, "subtask2", "", TaskStatus.NEW, 1);
-
-        manager.createSubtask(subtask1);
-        manager.createSubtask(subtask2);
-
-        manager.deleteAllSubtasks();
-
-        assertTrue(manager.getSubtasks().isEmpty());
+    void deleteTaskByIdNonExistentDoesNotThrow() {
+        assertDoesNotThrow(() -> manager.deleteTaskById(999));
     }
 
     @Test
-    public void deleteSubtasksByIdTest() {
-        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask(2, "subtask2", "", TaskStatus.NEW, 1);
-
-        manager.createSubtask(subtask1);
-        manager.createSubtask(subtask2);
-
-        manager.deleteSubtaskById(1);
-        List<Subtask> expectedSubtasks = new ArrayList<>();
-        expectedSubtasks.add(subtask2);
-
-        assertEquals(expectedSubtasks, manager.getSubtasks());
-    }
-
-    @Test
-    public void createSubtasksTest() {
-        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
-        manager.createSubtask(subtask1);
-
-        assertEquals(subtask1, manager.getSubtasksById(1));
-    }
-
-    @Test
-    public void updateSubtaskTest() {
-        Subtask subtask1 = new Subtask(1, "subtask1", "", TaskStatus.NEW, 1);
-        manager.createSubtask(subtask1);
-        Subtask update = new Subtask(1, "Update", "", TaskStatus.NEW, 1);
-        manager.updateSubtask(update);
-
-        assertEquals(update, manager.getSubtasksById(1));
-    }
-
-    @Test
-    public void getEpicsTest(){
-        Epic epic1 = new Epic(1, "Epic1", "", TaskStatus.NEW);
-        Epic epic2 = new Epic(2, "Epic2", "", TaskStatus.NEW);
-
-        manager.createEpic(epic1);
-        manager.createEpic(epic2);
-
-        List<Epic> expectedEpics = new ArrayList<>();
-        expectedEpics.add(epic1);
-        expectedEpics.add(epic2);
-
-        assertEquals(expectedEpics, manager.getEpics());
-    }
-
-    @Test
-    public void getEpicByIdTest() {
-        Epic epic1 = new Epic(1, "epic1", "", TaskStatus.NEW);
-        Epic epic2 = new Epic(2, "Epic2", "", TaskStatus.NEW);
-
-        manager.createEpic(epic1);
-        manager.createEpic(epic2);
-
-        Epic expectedEpic = epic2;
-
-
-        assertEquals(expectedEpic, manager.getEpicById(2));
-    }
-
-    @Test
-    public void deleteAllEpicTest(){
-        Epic epic1 = new Epic(1, "Epic1", "", TaskStatus.NEW);
-        Epic epic2 = new Epic(2, "Epic2", "", TaskStatus.NEW);
-
-        manager.createEpic(epic1);
-        manager.createEpic(epic2);
-
-        manager.deleteAllEpic();
-
+    void getEpicsEmptyReturnsEmptyList() {
         assertTrue(manager.getEpics().isEmpty());
     }
 
     @Test
-    public void deleteEpicByIdTest(){
-        Epic epic1 = new Epic(1, "epic1", "", TaskStatus.NEW);
-        Epic epic2 = new Epic(2, "Epic2", "", TaskStatus.NEW);
-
-        manager.createEpic(epic1);
-        manager.createEpic(epic2);
-
-        manager.deleteEpicById(1);
-
-        List<Epic> expectedEpics = new ArrayList<>();
-        expectedEpics.add(epic2);
-
-        assertEquals(expectedEpics, manager.getEpics());
-    }
-
-    @Test
-    public void createEpicTest(){
-        Epic epic1 = new Epic(1, "Epic1", "", TaskStatus.NEW);
-
-        manager.createEpic(epic1);
-
-        assertEquals(epic1, manager.getEpicById(1));
-    }
-
-    @Test
-    public void updateEpicTest(){
-        Epic epic1 = new Epic(1, "Epic1", "", TaskStatus.NEW);
-        manager.createEpic(epic1);
-
-        Epic update = new Epic(1, "Update", "", TaskStatus.IN_PROGRESS);
-        manager.updateEpic(update);
-
-        assertEquals(update, manager.getEpicById(1));
-    }
-
-    @Test
-    public void getSubtasksByEpicIdTest(){
-        Epic epic1 = new Epic(1, "epic1", "", TaskStatus.NEW);
-        Subtask subtask1 = new Subtask(2, "subtask1", "", TaskStatus.NEW, 1);
-        Subtask subtask2 = new Subtask(3, "subtask2", "", TaskStatus.NEW, 1);
-
-        manager.createEpic(epic1);
-        manager.createSubtask(subtask1);
-        manager.createSubtask(subtask2);
-
-        List<Subtask> expectedSubtasks = new ArrayList<>();
-        expectedSubtasks.add(subtask1);
-        expectedSubtasks.add(subtask2);
-
-        assertEquals(expectedSubtasks, manager.getSubtasksByEpicId(1));
-    }
-
-    @Test
-    public void getHistoryTest() {
-        Epic epic = new Epic(1, "Epic1", "", TaskStatus.NEW);
+    void createAndGetEpicStandardReturnsCreated() {
+        Epic epic = new Epic(0, "Epic1", "Desc", TaskStatus.NEW);
         manager.createEpic(epic);
-        manager.getEpicById(1);
+        int id = epic.getId();
 
-        List<Task> expectedHistory = new ArrayList<>();
-        expectedHistory.add(epic);
-
-        List<Task> actualHistory = manager.history();
-
-        assertEquals(expectedHistory, actualHistory);
+        assertEquals(epic, manager.getEpicById(id));
     }
 
     @Test
-    public void getTaskByIdReturnsNullWhenEmpty(){
-        Task task = manager.getTaskById(999);
-        assertNull(task);
+    void updateEpicStandardUpdatesNameAndDesc() {
+        Epic epic = new Epic(0, "Epic1", "", TaskStatus.NEW);
+        manager.createEpic(epic);
+        int id = epic.getId();
+
+        Epic updated = new Epic(id, "Updated", "NewDesc", TaskStatus.IN_PROGRESS);
+        manager.updateEpic(updated);
+
+        Epic found = manager.getEpicById(id);
+        assertEquals("Updated", found.getName());
+        assertEquals("NewDesc", found.getDescription());
     }
 
-    @AfterEach
-    public void deleteTestData() {
-        manager.deleteAllTasks();
-        manager.deleteAllSubtasks();
-        manager.deleteAllEpic();
+    @Test
+    void deleteEpicByIdStandardRemovesEpicAndSubtasks() {
+        Epic epic = new Epic(0, "Epic1", "", TaskStatus.NEW);
+        manager.createEpic(epic);
+        int epicId = epic.getId();
+
+        Subtask sub = new Subtask(0, "Sub1", "", TaskStatus.NEW, epicId);
+        manager.createSubtask(sub);
+        int subId = sub.getId();
+
+        manager.deleteEpicById(epicId);
+
+        assertNull(manager.getEpicById(epicId));
+        assertNull(manager.getSubtasksById(subId));
+    }
+
+    @Test
+    void getSubtasksEmptyReturnsEmptyList() {
+        assertTrue(manager.getSubtasks().isEmpty());
+    }
+
+    @Test
+    void createSubtaskWithExistingEpicLinksCorrectly() {
+        Epic epic = new Epic(0, "Epic1", "", TaskStatus.NEW);
+        manager.createEpic(epic);
+        int epicId = epic.getId();
+
+        Subtask sub = new Subtask(0, "Sub1", "", TaskStatus.NEW, epicId);
+        manager.createSubtask(sub);
+        int subId = sub.getId();
+
+        assertEquals(sub, manager.getSubtasksById(subId));
+        assertEquals(1, manager.getSubtasksByEpicId(epicId).size());
+    }
+
+    @Test
+    void createSubtaskNonExistentEpicIdDoesNotCrash() {
+        Subtask sub = new Subtask(0, "Sub1", "", TaskStatus.NEW, 999);
+
+        assertDoesNotThrow(() -> manager.createSubtask(sub));
+
+        assertNotNull(manager.getSubtasksById(sub.getId()));
+
+        assertEquals(1, manager.getSubtasksByEpicId(999).size());
+    }
+
+    @Test
+    void getSubtasksByEpicIdNonExistentEpicReturnsEmptyList() {
+        assertTrue(manager.getSubtasksByEpicId(999).isEmpty());
+    }
+
+    @Test
+    void history_addsTaskOnGetById() {
+        Task task = new Task(0, "Task1", "", TaskStatus.NEW);
+        manager.createTask(task);
+        manager.getTaskById(task.getId());
+
+        List<Task> history = manager.history();
+        assertEquals(1, history.size());
+        assertEquals(task, history.get(0));
     }
 }

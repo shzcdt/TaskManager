@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 abstract class TasksManagerTest<T extends TaskManager> {
     protected abstract T createManager(HistoryManager history);
@@ -286,6 +285,12 @@ abstract class TasksManagerTest<T extends TaskManager> {
         List<Task> actualHistory = manager.history();
 
         assertEquals(expectedHistory, actualHistory);
+    }
+
+    @Test
+    public void getTaskByIdReturnsNullWhenEmpty(){
+        Task task = manager.getTaskById(999);
+        assertNull(task);
     }
 
     @AfterEach

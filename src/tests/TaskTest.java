@@ -22,7 +22,7 @@ class TaskTest {
 
 
     @Test
-    void toStringForTask_producesValidCsvWithZeroEpicId() {
+    void toStringForTaskProducesValidCsvWithZeroEpicId() {
         Task task = new Task(5, "Buy milk", "Store", TaskStatus.NEW);
         String csv = Task.toString(task);
 
@@ -31,7 +31,7 @@ class TaskTest {
     }
 
     @Test
-    void toStringForSubtask_includesRealEpicId() {
+    void toStringForSubtaskIncludesRealEpicId() {
         Subtask sub = new Subtask(10, "Pack boxes", "Kitchen", TaskStatus.DONE, 5);
         String csv = Task.toString(sub);
 
@@ -39,7 +39,7 @@ class TaskTest {
     }
 
     @Test
-    void toStringForEpic_hasZeroEpicId() {
+    void toStringForEpicHasZeroEpicId() {
         Epic epic = new Epic(3, "Move", "Relocate apartment", TaskStatus.NEW);
         String csv = Task.toString(epic);
 

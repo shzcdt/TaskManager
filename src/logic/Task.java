@@ -87,14 +87,15 @@ public class Task {
             type = "TASK";
         }
 
-        return String.format("%d,%s,%s,%s,%s,%d", task.id, type, task.name, task.status, task.description, epicId);
+        return String.format("%d,%s,%s,%s,%s,%d,%s,%s", task.id, type, task.name, task.status, task.description, epicId,
+                timeToString(task.duration), timeToString(task.startTime));
     }
 
 
     public static Task fromString(String value) {
-        String[] partsOfTask = value.split(",");
+        String[] partsOfTask = value.split(",", -1);
 
-        if (partsOfTask.length != 6) {
+        if (partsOfTask.length != 8) {
             throw new IllegalArgumentException("Неверный формат строки задачи");
         }
 
@@ -104,11 +105,25 @@ public class Task {
         TaskStatus status = TaskStatus.valueOf(partsOfTask[3]);
         String description = partsOfTask[4];
         int epicId = Integer.parseInt(partsOfTask[5]);
+        Duration duration;
+        LocalDateTime startTime;
+
+        if (partsOfTask[6].isEmpty()){
+            duration = null;
+        } else {
+            duration = Duration.parse(partsOfTask[6]);
+        }
+
+        if (partsOfTask[7].isEmpty()){
+            startTime = null;
+        } else {
+            startTime = LocalDateTime.parse(partsOfTask[7], FORMAT);
+        }
 
         return switch (type) {
-            case "SUBTASK" -> new Subtask(id, name, description, status, epicId);
-            case "EPIC" -> new Epic(id, name, description, status);
-            case "TASK" -> new Task(id, name, description, status);
+            case "SUBTASK" -> new Subtask(id, name, description, status, epicId, duration, startTime);
+            case "EPIC" -> new Epic(id, name, description, status, duration, startTime);
+            case "TASK" -> new Task(id, name, description, status, duration, startTime);
             default -> throw new IllegalArgumentException("Неизвестный тип задачи: " + type);
         };
     }

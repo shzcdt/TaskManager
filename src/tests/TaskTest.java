@@ -27,7 +27,7 @@ class TaskTest {
         String csv = Task.toString(task);
 
 
-        assertEquals("5,TASK,Buy milk,NEW,Store,0", csv);
+        assertEquals("5,TASK,Buy milk,NEW,Store,0,,", csv);
     }
 
     @Test
@@ -35,7 +35,7 @@ class TaskTest {
         Subtask sub = new Subtask(10, "Pack boxes", "Kitchen", TaskStatus.DONE, 5);
         String csv = Task.toString(sub);
 
-        assertEquals("10,SUBTASK,Pack boxes,DONE,Kitchen,5", csv);
+        assertEquals("10,SUBTASK,Pack boxes,DONE,Kitchen,5,,", csv);
     }
 
     @Test
@@ -43,12 +43,12 @@ class TaskTest {
         Epic epic = new Epic(3, "Move", "Relocate apartment", TaskStatus.NEW);
         String csv = Task.toString(epic);
 
-        assertEquals("3,EPIC,Move,NEW,Relocate apartment,0", csv);
+        assertEquals("3,EPIC,Move,NEW,Relocate apartment,0,,", csv);
     }
 
     @Test
     void fromStringParsesTaskCorrectTypeAndFields() {
-        String csv = "5,TASK,Buy milk,NEW,Store,0";
+        String csv = "5,TASK,Buy milk,NEW,Store,0,,";
         Task result = Task.fromString(csv);
 
         assertInstanceOf(Task.class, result);
@@ -60,7 +60,7 @@ class TaskTest {
 
     @Test
     void fromStringParsesSubtaskPreservesEpicLink() {
-        String csv = "10,SUBTASK,Pack boxes,IN_PROGRESS,Kitchen,5";
+        String csv = "10,SUBTASK,Pack boxes,IN_PROGRESS,Kitchen,5,PT2H,2024-01-15 10:00";
         Task result = Task.fromString(csv);
 
         assertInstanceOf(Subtask.class, result);
@@ -70,7 +70,7 @@ class TaskTest {
 
     @Test
     void fromStringParsesEpicInstantiatesCorrectly() {
-        String csv = "3,EPIC,Move,DONE,Relocate apartment,0";
+        String csv = "3,EPIC,Move,DONE,Relocate apartment,0,,";
         Task result = Task.fromString(csv);
 
         assertInstanceOf(Epic.class, result);

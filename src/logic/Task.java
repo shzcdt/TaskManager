@@ -1,16 +1,29 @@
 package logic;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Task {
     private int id;
     private String name;
     private String description;
     private TaskStatus status;
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private Duration duration;
+    private LocalDateTime startTime;
 
     public Task(int id, String name, String description, TaskStatus status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
+    }
+
+    public Task(int id, String name, String description, TaskStatus status, Duration duration, LocalDateTime startTime) {
+        this(id, name, description, status);
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     public int getId() {
@@ -27,6 +40,22 @@ public class Task {
 
     public TaskStatus getStatus() {
         return status;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (startTime != null && duration != null) {
+            return startTime.plus(duration);
+        } else {
+            return null;
+        }
     }
 
     protected void setId(int newId){
@@ -86,7 +115,8 @@ public class Task {
 
     @Override
     public String toString(){
-        return String.format("Task:{id=%d, name='%s', status=%s, description='%s'}", id, name, status, description);
+        return String.format("Task:{id=%d, name='%s', status=%s, description='%s', duration='%s', startTime='%s', endTime='%s'}",
+                id, name, status, description, timeToString(duration), timeToString(startTime), timeToString(getEndTime()));
     }
 
     @Override

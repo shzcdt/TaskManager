@@ -58,7 +58,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager{
     private void save() {
         try {
             List<String> linesForWriter = new ArrayList<>();
-            String heading = "id,type,name,status,description,epicId";
+            String heading = "id,type,name,status,description,epicId,duration,startTime";
 
             linesForWriter.add(heading);
 

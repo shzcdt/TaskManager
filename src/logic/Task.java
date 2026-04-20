@@ -74,6 +74,15 @@ public class Task {
         this.description = description;
     }
 
+    private static String timeToString(Object obj) {
+        return switch (obj){
+            case LocalDateTime date -> date.format(FORMAT);
+            case Duration duration -> duration.toString();
+            case null -> "";
+            default -> throw new IllegalArgumentException("Неподдерживаемый тип времени: " + obj.getClass());
+        };
+    }
+
     public static String toString(Task task) {
         String type;
         int epicId = 0;

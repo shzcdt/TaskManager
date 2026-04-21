@@ -74,6 +74,14 @@ public class Task {
         this.description = description;
     }
 
+    protected void setDuration(Duration duration){
+        this.duration = duration;
+    }
+
+    protected void setStartTime(LocalDateTime startTime){
+        this.startTime = startTime;
+    }
+
     private static String timeToString(Object obj) {
         return switch (obj){
             case LocalDateTime date -> date.format(FORMAT);

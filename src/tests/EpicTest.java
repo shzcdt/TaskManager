@@ -4,14 +4,29 @@ import logic.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class EpicTest {
     private TaskManager manager;
 
+    private Epic createEpic(int id) {
+        return new Epic(id, "Epic-" + id, "desc", TaskStatus.NEW);
+    }
 
+    private Subtask createSubtask(int id, int epicId, Duration duration, LocalDateTime startTime) {
+        return new Subtask(id, "Epic-" + id, "desc", TaskStatus.NEW, epicId, duration, startTime);
+    }
+    private Subtask createSubtask(int id, int epicId) {
+        return new Subtask(id, "Epic-" + id, "desc", TaskStatus.NEW, epicId);
+    }
     @BeforeEach
-    public void createManger() {
+    public void setUp() {
         manager = Managers.getDefault();
     }
 

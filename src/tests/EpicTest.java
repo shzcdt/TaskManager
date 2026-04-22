@@ -32,7 +32,7 @@ class EpicTest {
 
     @Test
     public void epicStatusMustBeNewWhenNoSubtasks() {
-        Epic epic = new Epic(0, "Epic1", "", TaskStatus.NEW);
+        Epic epic = createEpic(1);
         manager.createEpic(epic);
 
 
@@ -44,8 +44,8 @@ class EpicTest {
 
     @Test
     public void epicStatusMustBeInProgressWhenSubtasksInProcess() {
-        Epic epic = new Epic(0, "Epic1", "", TaskStatus.NEW);
-        Subtask subtask = new Subtask(1, "SubtaskForEpic1", "", TaskStatus.IN_PROGRESS, 1);
+        Epic epic = createEpic(1);
+        Subtask subtask = new Subtask(2, "SubtaskForEpic1", "", TaskStatus.IN_PROGRESS, 1);
 
         manager.createEpic(epic);
         manager.createSubtask(subtask);

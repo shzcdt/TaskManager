@@ -17,10 +17,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${property("JUnitVersion")}")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${property("JUnitVersion")}")
 
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${property("JUnitVersion")}")
 }
 
 jacoco {

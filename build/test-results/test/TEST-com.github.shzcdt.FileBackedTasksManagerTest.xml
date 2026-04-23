@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.shzcdt.FileBackedTasksManagerTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-04-23T07:58:03.487Z" hostname="NB-3231-lnx.corp.1440.space" time="0.096">
+  <properties/>
+  <testcase name="deleteTaskByIdNonExistentDoesNotThrow()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.044"/>
+  <testcase name="updateTaskStandardUpdatesFields()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.011"/>
+  <testcase name="createSubtaskNonExistentEpicIdDoesNotCrash()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.002"/>
+  <testcase name="getSubtasksEmptyReturnsEmptyList()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.003"/>
+  <testcase name="updateTaskNonExistentIgnored()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.008"/>
+  <testcase name="getEpicsEmptyReturnsEmptyList()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.002"/>
+  <testcase name="deleteEpicByIdStandardRemovesEpicAndSubtasks()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.003"/>
+  <testcase name="createSubtaskWithExistingEpicLinksCorrectly()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.002"/>
+  <testcase name="createAndGetTaskStandardReturnsCreatedTask()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.002"/>
+  <testcase name="deleteTaskByIdStandardRemovesTask()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.002"/>
+  <testcase name="history_addsTaskOnGetById()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.001"/>
+  <testcase name="createAndGetEpicStandardReturnsCreated()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.001"/>
+  <testcase name="updateEpicStandardUpdatesNameAndDesc()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.002"/>
+  <testcase name="getSubtasksByEpicIdNonExistentEpicReturnsEmptyList()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.002"/>
+  <testcase name="getTaskByIdNonExistentReturnsNull()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.002"/>
+  <testcase name="getTasksEmptyReturnsEmptyList()" classname="com.github.shzcdt.FileBackedTasksManagerTest" time="0.001"/>
+  <system-out><![CDATA[Файл не найден
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

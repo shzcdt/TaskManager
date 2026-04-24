@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.shzcdt.InMemoryHistoryManagerTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-04-23T07:58:03.585Z" hostname="NB-3231-lnx.corp.1440.space" time="0.01">
+  <properties/>
+  <testcase name="addExceedsMaxSizeEvictsOldest()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.001"/>
+  <testcase name="removeFromHeadUpdatesCorrectly()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.001"/>
+  <testcase name="removeFromMiddleUpdatesCorrectly()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.001"/>
+  <testcase name="addMultipleTasksPreservesInsertionsOrder()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.001"/>
+  <testcase name="removeFromTailUpdatesCorrectly()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.0"/>
+  <testcase name="combinedOperations()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.0"/>
+  <testcase name="getHistoryEmptyReturnEmptyList()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.0"/>
+  <testcase name="addDuplicateTaskMovesToLastAndRemovesPrevious()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.0"/>
+  <testcase name="addSingleTaskAddsToHistory()" classname="com.github.shzcdt.InMemoryHistoryManagerTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

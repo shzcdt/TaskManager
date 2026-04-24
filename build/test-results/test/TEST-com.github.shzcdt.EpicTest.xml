@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.shzcdt.EpicTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-04-23T07:58:03.453Z" hostname="NB-3231-lnx.corp.1440.space" time="0.03">
+  <properties/>
+  <testcase name="epicTimeIsNullWhenNoSubtasks()" classname="com.github.shzcdt.EpicTest" time="0.014"/>
+  <testcase name="epicStatusMustBeInProgressWhenAllSubtasksInProgress()" classname="com.github.shzcdt.EpicTest" time="0.002"/>
+  <testcase name="epicTimeIgnoresSubtasksWithNullTime()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicTimeHandlesOverlappingSubtasks()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicStatusMustBeNewWhenAllSubtasksNew()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicStatusMustBeInProgressWhenSubtasksDoneAndNew()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicTimeRecalculatesAfterSubtaskUpdate()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicStatusMustBeDoneWhenAllSubtasksDone()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicTimeAggregatesSequentialSubtasks()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicTimeMatchesSingleSubtask()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicStatusMustBeNewWhenNoSubtasks()" classname="com.github.shzcdt.EpicTest" time="0.0"/>
+  <testcase name="epicDurationMustBeSumDurationAboutSubtasks()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <testcase name="epicStatusMustBeInProgressWhenSubtasksInProcess()" classname="com.github.shzcdt.EpicTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

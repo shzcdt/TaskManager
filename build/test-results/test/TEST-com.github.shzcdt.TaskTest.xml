@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.shzcdt.TaskTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-04-23T07:58:03.610Z" hostname="NB-3231-lnx.corp.1440.space" time="0.012">
+  <properties/>
+  <testcase name="fromStringParsesTaskCorrectTypeAndFields()" classname="com.github.shzcdt.TaskTest" time="0.001"/>
+  <testcase name="fromStringThrowsOnUnknownTaskType()" classname="com.github.shzcdt.TaskTest" time="0.002"/>
+  <testcase name="fromStringParsesSubtaskPreservesEpicLink()" classname="com.github.shzcdt.TaskTest" time="0.002"/>
+  <testcase name="toStringForEpicHasZeroEpicId()" classname="com.github.shzcdt.TaskTest" time="0.001"/>
+  <testcase name="gettersReturnCorrectValues()" classname="com.github.shzcdt.TaskTest" time="0.0"/>
+  <testcase name="toStringForTaskProducesValidCsvWithZeroEpicId()" classname="com.github.shzcdt.TaskTest" time="0.0"/>
+  <testcase name="toStringForSubtaskIncludesRealEpicId()" classname="com.github.shzcdt.TaskTest" time="0.0"/>
+  <testcase name="fromStringThrowsOnMalformedCsv()" classname="com.github.shzcdt.TaskTest" time="0.0"/>
+  <testcase name="fromStringThrowsOnInvalidEnumValue()" classname="com.github.shzcdt.TaskTest" time="0.0"/>
+  <testcase name="fromStringParsesEpicInstantiatesCorrectly()" classname="com.github.shzcdt.TaskTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

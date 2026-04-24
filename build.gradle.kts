@@ -21,6 +21,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:${property("JUnitVersion")}")
 
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${property("JUnitVersion")}")
+    compileOnly("org.projectlombok:lombok:1.18.46")
+    annotationProcessor("org.projectlombok:lombok:1.18.46")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.46")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.46")
 }
 
 jacoco {

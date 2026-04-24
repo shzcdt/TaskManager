@@ -1,9 +1,13 @@
 package com.github.shzcdt.logic;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+@Getter
+@Setter
 public class Task {
     private int id;
     private String name;
@@ -56,30 +60,6 @@ public class Task {
         } else {
             return null;
         }
-    }
-
-    protected void setId(int newId){
-        id = newId;
-    }
-
-    protected void setStatus(TaskStatus newStatus){
-        status = newStatus;
-    }
-
-    protected void setName(String name) {
-        this.name = name;
-    }
-
-    protected void setDescription(String description) {
-        this.description = description;
-    }
-
-    protected void setDuration(Duration duration){
-        this.duration = duration;
-    }
-
-    protected void setStartTime(LocalDateTime startTime){
-        this.startTime = startTime;
     }
 
     private static String timeToString(Object obj) {

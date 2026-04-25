@@ -5,10 +5,12 @@ import com.github.shzcdt.logic.InMemoryHistoryManager;
 import com.github.shzcdt.logic.Task;
 import com.github.shzcdt.logic.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
 
@@ -26,7 +28,7 @@ class InMemoryHistoryManagerTest {
     private List<Integer> getHistoryIds() {
         return historyManager.getHistory().stream()
                 .map(Task::getId)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Test
@@ -112,5 +114,13 @@ class InMemoryHistoryManagerTest {
 
         historyManager.add(createTask(6));
         assertEquals(List.of(1, 4, 5, 3, 6), getHistoryIds());
+    }
+
+    @Test
+    @DisplayName("Удаление несуществующего ID не вызывает ошибок")
+    void remove_nonExistentId_doesNotThrow() {
+        historyManager.add(createTask(1));
+        assertDoesNotThrow(() -> historyManager.remove(999));
+        assertEquals(List.of(1), getHistoryIds());
     }
 }

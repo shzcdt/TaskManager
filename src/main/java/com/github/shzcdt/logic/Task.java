@@ -99,19 +99,24 @@ public class Task {
         int id = Integer.parseInt(partsOfTask[0]);
         String type = partsOfTask[1];
         String name = partsOfTask[2];
-        TaskStatus status = TaskStatus.valueOf(partsOfTask[3]);
+        TaskStatus status;
+        if (partsOfTask[3].isEmpty() || partsOfTask[3].isBlank()){
+            status = null;
+        } else {
+            status = TaskStatus.valueOf(partsOfTask[3]);
+        }
         String description = partsOfTask[4];
         int epicId = Integer.parseInt(partsOfTask[5]);
         Duration duration;
         LocalDateTime startTime;
 
-        if (partsOfTask[6].isEmpty()){
+        if (partsOfTask[6].isEmpty() || partsOfTask[6].isBlank()){
             duration = null;
         } else {
             duration = Duration.parse(partsOfTask[6]);
         }
 
-        if (partsOfTask[7].isEmpty()){
+        if (partsOfTask[7].isEmpty() || partsOfTask[7].isBlank()){
             startTime = null;
         } else {
             startTime = LocalDateTime.parse(partsOfTask[7], FORMAT);
